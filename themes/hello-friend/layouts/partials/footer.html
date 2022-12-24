@@ -23,5 +23,6 @@
 {{ $theme := resources.Get "js/theme.js" | js.Build }}
 {{ $bundle := slice $menu $prism $theme | resources.Concat "bundle.js" | resources.Minify }}
 <script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
+{{ if .Params.math }}{{ partial "katex.html" . }}{{ end }}
 
 {{- partial "extended_footer.html" . }}
