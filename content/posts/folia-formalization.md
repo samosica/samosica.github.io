@@ -8,6 +8,8 @@ math: true
 今年もクリスマスの時期がやってきました。この時期は全国各地で巨大なクリスマスツリー🎄が飾られていることと思います。
 ツリーで思い出したのですが、AtCoderで2020年に出題された[Folia](https://atcoder.jp/contests/nomura2020/tasks/nomura2020_c)という問題の解法をCoqで形式検証していたのでその話を書きます。
 
+<!--more-->
+
 すべてのソースコードは[ここ](https://github.com/samosica/folia-formalization/blob/main/Folia.v)にあります。
 
 ### 問題
