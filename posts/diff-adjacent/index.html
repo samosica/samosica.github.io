@@ -1,0 +1,114 @@
+<!doctype html><html lang=en><head><title>Diff Adjacent (AtCoder Beginner Contest 297 Ex) ::
+カクシカシカ</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Diff Adjacent (AtCoder Beginner Contest 297 Ex)の解法を説明します。 説明する解法は求めたい長さの総和が畳み込みの形で表せることを用いるもので、すでに解説がありますが(→ 同じ解法の解説)、 この記事では立式パートを詳しめに書いています。
+解法 # 要素の和が$n$の素晴らしい整数列の長さの合計を$s_n$とします。加えて、$s_n$を計算するためにそのような列の個数$c_n$も考えます。
+$c_n\ (n = 0, 1, \dots, N)$を計算する # まず、$c_n$の漸化式を導きます。そのためにすべての$i = 1, 2, \dots, n$について、要素の和が$n$、先頭の要素が$i$である素晴らしい整数列を数えて、それらを足し合わせることにします。 例として、$n = 7, i = 2$のケースを考えてみると、
+要素の和が$5$の素晴らしい列の先頭に$2$を付け加えることで条件を満たす列がすべて作れます。 しかし、作られる列の中には先頭2要素が同じ値になっていて条件を満たさない列も含まれてしまっているので、その分を引く必要があります。 引く値は要素の和が$5$、先頭の要素が$2$である素晴らしい列の個数です。 そのような列は要素の和が$3$の素晴らしい列の先頭に$2$を付け加えることで網羅できますが、また条件を満たさない列を含んでしまっているので、その分を引かなければいけません。 次に引く値は要素の和が$3$、先頭の要素が$2$の素晴らしい列の個数です。 そのような列は要素の和が$1$の素晴らしい列の先頭に$2$を付け加えると得られます。 ここで和が$1$の正整数列の要素は$1$以下なので、(1), (2)とは違って得られる列はすべて条件を満たしています。 (1), (2), (3)より要素の和が$7$、先頭の要素が$2$の素晴らしい列の個数は$c_5 - (c_3 - c_1)$であることが分かります。 同様に考えると、
+$n = 7, i = 3$のケースでは$c_4 - c_1$ $n = 7, i = 1$のケースでは$c_6 - (c_5 - (c_4 - (c_3 - (c_2 - (c_1 - c_0)))))$ このように要素の和が$n$、先頭の要素が$i$である素晴らしい列の個数は$c_{n - i}, c_{n - 2i}, \dots$にプラスマイナスを交互に付けて和を取ったものになります。一般には次のように表されます。 $$ \sum_{j = 1}^{\lfloor n / i \rfloor} (-1)^{j + 1} c_{n - ij} $$"><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=https://samosica.github.io/posts/diff-adjacent/><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=https://samosica.github.io/style.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=https://samosica.github.io/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=https://samosica.github.io/img/favicon.png><link href=/fonts/Inter-Italic.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-Regular.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-Medium.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-MediumItalic.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-Bold.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-BoldItalic.woff2 rel=preload type=font/woff2 as=font crossorigin><meta name=twitter:card content="summary"><meta name=twitter:title content="Diff Adjacent (AtCoder Beginner Contest 297 Ex)"><meta name=twitter:description content="Diff Adjacent (AtCoder Beginner Contest 297 Ex)の解法を説明します。 同じ解法の解説はすでにありますが、この記事では立式パートを詳しめに書いています。"><meta property="og:title" content="Diff Adjacent (AtCoder Beginner Contest 297 Ex)"><meta property="og:description" content="Diff Adjacent (AtCoder Beginner Contest 297 Ex)の解法を説明します。 同じ解法の解説はすでにありますが、この記事では立式パートを詳しめに書いています。"><meta property="og:type" content="article"><meta property="og:url" content="https://samosica.github.io/posts/diff-adjacent/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-04-26T19:00:00+09:00"><meta property="article:modified_time" content="2023-04-26T19:00:00+09:00"><meta property="og:site_name" content="カクシカシカ"></head><body class=dark-theme><div class=container><header class=header><span class=header__inner><a href=/ class=logo style=text-decoration:none><span class=logo__mark><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44"><path fill="none" d="M15 8l14.729 14.382L15 35.367"/></svg></span><span class=logo__text>カクシカシカ</span></a>
+<span class=header__right><span class=theme-toggle><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 41c10.4934.0 19-8.5066 19-19C41 11.5066 32.4934 3 22 3 11.5066 3 3 11.5066 3 22s8.5066 19 19 19zM7 22C7 13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22z"/></svg></span></span></span></header><div class=content><article class=post><h1 class=post-title>Diff Adjacent (AtCoder Beginner Contest 297 Ex)</h1><div class=post-meta><time class=post-date>2023-04-26</time></div><div class=post-content><p><a href=https://atcoder.jp/contests/abc297/tasks/abc297_h>Diff Adjacent (AtCoder Beginner Contest 297 Ex)</a>の解法を説明します。
+説明する解法は求めたい長さの総和が畳み込みの形で表せることを用いるもので、すでに解説がありますが(→ <a href=#%E5%90%8C%E3%81%98%E8%A7%A3%E6%B3%95%E3%81%AE%E8%A7%A3%E8%AA%AC>同じ解法の解説</a>)、
+この記事では立式パートを詳しめに書いています。</p><h3 id=解法>解法
+<a href=#%e8%a7%a3%e6%b3%95 class=h-anchor aria-hidden=true>#</a></h3><p>要素の和が$n$の素晴らしい整数列の長さの合計を$s_n$とします。加えて、$s_n$を計算するためにそのような列の個数$c_n$も考えます。</p><h4 id=c_n-n--0-1-dots-nを計算する>$c_n\ (n = 0, 1, \dots, N)$を計算する
+<a href=#c_n-n--0-1-dots-n%e3%82%92%e8%a8%88%e7%ae%97%e3%81%99%e3%82%8b class=h-anchor aria-hidden=true>#</a></h4><p>まず、$c_n$の漸化式を導きます。そのためにすべての$i = 1, 2, \dots, n$について、要素の和が$n$、先頭の要素が$i$である素晴らしい整数列を数えて、それらを足し合わせることにします。
+例として、$n = 7, i = 2$のケースを考えてみると、</p><ol><li>要素の和が$5$の素晴らしい列の先頭に$2$を付け加えることで条件を満たす列がすべて作れます。
+しかし、作られる列の中には先頭2要素が同じ値になっていて条件を満たさない列も含まれてしまっているので、その分を引く必要があります。</li><li>引く値は要素の和が$5$、先頭の要素が$2$である素晴らしい列の個数です。
+そのような列は要素の和が$3$の素晴らしい列の先頭に$2$を付け加えることで網羅できますが、また条件を満たさない列を含んでしまっているので、その分を引かなければいけません。</li><li>次に引く値は要素の和が$3$、先頭の要素が$2$の素晴らしい列の個数です。
+そのような列は要素の和が$1$の素晴らしい列の先頭に$2$を付け加えると得られます。
+ここで和が$1$の正整数列の要素は$1$以下なので、(1), (2)とは違って得られる列はすべて条件を満たしています。</li><li>(1), (2), (3)より要素の和が$7$、先頭の要素が$2$の素晴らしい列の個数は$c_5 - (c_3 - c_1)$であることが分かります。</li></ol><p>同様に考えると、</p><ul><li>$n = 7, i = 3$のケースでは$c_4 - c_1$</li><li>$n = 7, i = 1$のケースでは$c_6 - (c_5 - (c_4 - (c_3 - (c_2 - (c_1 - c_0)))))$</li></ul><p>このように要素の和が$n$、先頭の要素が$i$である素晴らしい列の個数は$c_{n - i}, c_{n - 2i}, \dots$にプラスマイナスを交互に付けて和を取ったものになります。一般には次のように表されます。
+$$ \sum_{j = 1}^{\lfloor n / i \rfloor} (-1)^{j + 1} c_{n - ij} $$</p><p>この式から$c_n$の漸化式
+$$ c_n = \sum_{i = 1}^{n} \sum_{j = 1}^{\lfloor n / i \rfloor} (-1)^{j + 1} c_{n - ij} $$
+が得られます。</p><p>しかし、このままだと効率的に計算できません。
+そこで、畳み込みの形に持っていきます。$ij = p$とおくと、
+$$
+c_n
+= \sum_{p = 1}^{n} \sum_{j \mid p} (-1)^{j + 1} c_{n - p}
+= \sum_{p = 1}^{n} \left( \sum_{j \mid p} (-1)^{j + 1} \right) c_{n - p}
+$$
+と書けます。ただし、$\sum_{j \mid p}$は$p$のすべての正の約数に渡る和です。</p><p>括弧内を$f_p$とおくと、
+$$ c_n = \sum_{p = 1}^{n} f_p c_{n - p} $$
+になり、さらに$f_0 = 0$とすると、
+$$ c_n = \sum_{p = 0}^{n} f_p c_{n - p} $$
+となります。こうして$c_n$を畳み込みの形で表せました。</p><p>立式ができたので後は計算するだけです。
+$ f_p\ (p = 1, \dots, N) $の値は愚直に計算できます。
+なぜなら、5桁の整数が持つ約数の個数は最大でも100個程度(<a href=https://oeis.org/A066150>OEIS A066150</a>)だからです(調和級数を対数で上から抑えても分かります)。</p><p>$ c_n\ (n = 0, \dots, N) $の値は形式的冪級数を使って計算します。
+$ C(x) = \sum_{n = 0}^{\infty} c_n x^n, F(x) = \sum_{n = 0}^{\infty} f_n x^n $とすると、上で得られた式と$ c_0 = 1 $から
+$$ C(x) = F(x)C(x) + 1 $$
+です。これを$C(x)$について解くと、
+$$ C(x) = \frac{1}{1 - F(x)} $$
+が得られます。
+右辺の$N$次までの係数は形式的冪級数の逆元の計算によって$ O(N \log N) $でできます。</p><h4 id=s_n-n--0-dots-nを計算する>$s_n\ (n = 0, \dots, N)$を計算する
+<a href=#s_n-n--0-dots-n%e3%82%92%e8%a8%88%e7%ae%97%e3%81%99%e3%82%8b class=h-anchor aria-hidden=true>#</a></h4><p>続いて$ s_n $の漸化式を導きます。$ c_n $のときと同じく先頭の要素$ i $で分けて考えます。</p><p>例えば、$ n = 7, i = 2 $のケースでは
+$$ (1c_5 + s_5) - ((2c_3 + s_3) - (3c_1 + s_1)) $$
+となります。$ c_5, c_3, c_1 $に係数が付いているのは先頭の$ 2 $の個数を数えているためです。</p><p>一般には
+$$ \sum_{j = 1}^{\lfloor n / i \rfloor} (-1)^{j + 1} (j c_{n - ij} + s_{n - ij}) $$
+です。</p><p>このことから$ s_n $を畳み込みの形で表すと、
+$$ s_n = \sum_{p = 0}^n g_p c_{n - p} + \sum_{p = 0}^n f_p c_{n - p} $$
+になることが分かります。ただし、$g_p$は
+$$
+g_p = \begin{cases}
+\sum_{j \mid p} (-1)^{j + 1} j & (p \ge 1) \\
+0 & (p = 0)
+\end{cases}
+$$
+とします。</p><p>したがって、$S(x) = \sum_{n = 0}^\infty s_n x^n, G(x) = \sum_{n = 0}^\infty g_n x^n$とすると、
+$$
+\begin{align*}
+S(x) &= G(x)C(x) + F(x)S(x) \\
+\therefore S(x) &= \frac{G(x)C(x)}{1 - F(x)} \\
+&= G(x)C(x)^2
+\end{align*}
+$$</p><p>後は$ c_n $と同じです。</p><h3 id=ソースコード>ソースコード
+<a href=#%e3%82%bd%e3%83%bc%e3%82%b9%e3%82%b3%e3%83%bc%e3%83%89 class=h-anchor aria-hidden=true>#</a></h3><p>ライブラリ部分は省略しています。すべてのコードを見たい方は<a href=https://atcoder.jp/contests/abc297/submissions/40758513>提出ページ</a>をご覧ください。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+</span></span><span style=display:flex><span>    std<span style=color:#f92672>::</span>cin.tie(<span style=color:#66d9ef>nullptr</span>);
+</span></span><span style=display:flex><span>    std<span style=color:#f92672>::</span>ios<span style=color:#f92672>::</span>sync_with_stdio(false);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> N;
+</span></span><span style=display:flex><span>    std<span style=color:#f92672>::</span>cin <span style=color:#f92672>&gt;&gt;</span> N;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span><span style=color:#66d9ef>int</span><span style=color:#f92672>&gt;</span> largestPrimeFactor;
+</span></span><span style=display:flex><span>    std<span style=color:#f92672>::</span>tie(std<span style=color:#f92672>::</span>ignore, largestPrimeFactor) <span style=color:#f92672>=</span> sieve(N);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>constexpr</span> <span style=color:#66d9ef>auto</span> MOD <span style=color:#f92672>=</span> Poly998244353<span style=color:#f92672>::</span>MODULUS;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Poly998244353 f(N <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>), g(N <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>; i <span style=color:#f92672>&lt;=</span> N; i <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> d : getDivisors(i, largestPrimeFactor)){
+</span></span><span style=display:flex><span>            ll sign <span style=color:#f92672>=</span> (d <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>%</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>?</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>:</span> MOD <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>            f[i] <span style=color:#f92672>+=</span> sign;
+</span></span><span style=display:flex><span>            g[i] <span style=color:#f92672>+=</span> sign <span style=color:#f92672>*</span> d;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        f[i] <span style=color:#f92672>%=</span> MOD;
+</span></span><span style=display:flex><span>        g[i] <span style=color:#f92672>%=</span> MOD;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>auto</span> c <span style=color:#f92672>=</span> (Poly998244353<span style=color:#f92672>::</span>one() <span style=color:#f92672>-</span> f).inv();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>auto</span> s <span style=color:#f92672>=</span> g <span style=color:#f92672>*</span> c <span style=color:#f92672>*</span> c;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> s[N] <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>OCamlのソースコードもあります。全体のコードは<a href=https://atcoder.jp/contests/abc297/submissions/40721345>提出ページ</a>をご覧ください。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ocaml data-lang=ocaml><span style=display:flex><span><span style=color:#66d9ef>let</span> () <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> n <span style=color:#f92672>=</span> Scanf.scanf <span style=color:#e6db74>&#34; %d&#34;</span> Fun.id <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> <span style=color:#f92672>_,</span> prime_factor <span style=color:#f92672>=</span> sieve n <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> Array.make <span style=color:#f92672>(</span>n <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> b <span style=color:#f92672>=</span> Array.make <span style=color:#f92672>(</span>n <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> () <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>    Iter.<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span> <span style=color:#f92672>--</span> n<span style=color:#f92672>)</span> <span style=color:#f92672>|&gt;</span> Iter.iter <span style=color:#f92672>@@</span> <span style=color:#66d9ef>fun</span> i <span style=color:#f92672>-&gt;</span>
+</span></span><span style=display:flex><span>      Iter.of_array <span style=color:#f92672>(</span>divisors <span style=color:#f92672>~</span>prime_factor i<span style=color:#f92672>)</span> <span style=color:#f92672>|&gt;</span> Iter.iter <span style=color:#f92672>@@</span> <span style=color:#66d9ef>fun</span> d <span style=color:#f92672>-&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>let</span> sign <span style=color:#f92672>=</span> <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>d <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#f92672>mod</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>then</span> <span style=color:#ae81ff>1</span> <span style=color:#66d9ef>else</span> Mod998244353.<span style=color:#f92672>(~-%</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>)</span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>        a<span style=color:#f92672>.(</span>i<span style=color:#f92672>)</span> <span style=color:#f92672>&lt;-</span> Mod998244353.<span style=color:#f92672>(</span>a<span style=color:#f92672>.(</span>i<span style=color:#f92672>)</span> <span style=color:#f92672>+%</span> sign<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>        b<span style=color:#f92672>.(</span>i<span style=color:#f92672>)</span> <span style=color:#f92672>&lt;-</span> Mod998244353.<span style=color:#f92672>(</span>b<span style=color:#f92672>.(</span>i<span style=color:#f92672>)</span> <span style=color:#f92672>+%</span> sign <span style=color:#f92672>*%</span> d<span style=color:#f92672>)</span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> Poly998244353.of_array a <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> b <span style=color:#f92672>=</span> Poly998244353.of_array b <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> c <span style=color:#f92672>=</span> Poly998244353.<span style=color:#f92672>(</span>inv <span style=color:#f92672>~</span>degree<span style=color:#f92672>:</span>n <span style=color:#f92672>(</span>one <span style=color:#f92672>-:</span> a<span style=color:#f92672>))</span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> s <span style=color:#f92672>=</span> Poly998244353.<span style=color:#f92672>(</span>b <span style=color:#f92672>*:</span> c <span style=color:#f92672>*:</span> c<span style=color:#f92672>)</span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> s <span style=color:#f92672>=</span> Poly998244353.to_array s <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  Printf.printf <span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span> s<span style=color:#f92672>.(</span>n<span style=color:#f92672>)</span>
+</span></span></code></pre></div><h3 id=同じ解法の解説>同じ解法の解説
+<a href=#%e5%90%8c%e3%81%98%e8%a7%a3%e6%b3%95%e3%81%ae%e8%a7%a3%e8%aa%ac class=h-anchor aria-hidden=true>#</a></h3><p>2023年4月26日に確認しました。</p><ul><li><a href=https://atcoder.jp/contests/abc297/editorial/6188>https://atcoder.jp/contests/abc297/editorial/6188</a></li><li><a href=https://kmjp.hatenablog.jp/entry/2023/04/19/1030>https://kmjp.hatenablog.jp/entry/2023/04/19/1030</a></li></ul></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=https://samosica.github.io/posts/balanced-tree/><span class=button__text>木が再帰的に定義されているときの重心分解</span>
+<span class=button__icon>→</span></a></span></div></div></article></div><footer class=footer><div class=footer__inner><a href=/ class=logo style=text-decoration:none><span class=logo__mark><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44"><path fill="none" d="M15 8l14.729 14.382L15 35.367"/></svg></span><span class=logo__text>カクシカシカ</span></a><div class=copyright><span>© 2023 Powered by
+<a href=https://gohugo.io target=_blank rel=noopener>Hugo</a></span>
+<span>Theme created by
+<a href=https://twitter.com/panr target=_blank rel=noopener>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css integrity=sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0 crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js integrity=sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4 crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script></div></body></html>
