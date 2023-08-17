@@ -1,0 +1,99 @@
+<!doctype html><html lang=en><head><title>AtCoderでKokaを使うときのTips ::
+カクシカシカ</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="2023年8月に行なわれた言語アップデートにより AtCoder で Koka が使えるようになりました。 この記事では Koka を使って問題を解くときに役に立ちそうな情報を書いていきます。
+"><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=https://samosica.github.io/posts/handy-tips-for-using-koka-in-atcoder/><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=https://samosica.github.io/style.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=https://samosica.github.io/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=https://samosica.github.io/img/favicon.png><link href=/fonts/Inter-Italic.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-Regular.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-Medium.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-MediumItalic.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-Bold.woff2 rel=preload type=font/woff2 as=font crossorigin><link href=/fonts/Inter-BoldItalic.woff2 rel=preload type=font/woff2 as=font crossorigin><meta name=twitter:card content="summary"><meta name=twitter:title content="AtCoderでKokaを使うときのTips"><meta name=twitter:description content="2023年8月に行なわれた言語アップデートにより AtCoder で Koka が使えるようになりました。
+この記事では Koka を使って問題を解くときに役に立ちそうな情報を書いていきます。"><meta property="og:title" content="AtCoderでKokaを使うときのTips"><meta property="og:description" content="2023年8月に行なわれた言語アップデートにより AtCoder で Koka が使えるようになりました。
+この記事では Koka を使って問題を解くときに役に立ちそうな情報を書いていきます。"><meta property="og:type" content="article"><meta property="og:url" content="https://samosica.github.io/posts/handy-tips-for-using-koka-in-atcoder/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-08-12T20:19:00+09:00"><meta property="article:modified_time" content="2023-08-12T20:19:00+09:00"></head><body class=dark-theme><div class=container><header class=header><span class=header__inner><a href=/ class=logo style=text-decoration:none><span class=logo__mark><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44"><path fill="none" d="M15 8l14.729 14.382L15 35.367"/></svg></span><span class=logo__text>カクシカシカ</span></a>
+<span class=header__right><span class=theme-toggle><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 41c10.4934.0 19-8.5066 19-19C41 11.5066 32.4934 3 22 3 11.5066 3 3 11.5066 3 22s8.5066 19 19 19zM7 22C7 13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22z"/></svg></span></span></span></header><div class=content><article class=post><h1 class=post-title>AtCoderでKokaを使うときのTips</h1><div class=post-meta><time class=post-date>2023-08-12</time></div><div class=post-content><p>2023年8月に行なわれた言語アップデートにより AtCoder で <a href=https://koka-lang.github.io/koka/doc/book.html>Koka</a> が使えるようになりました。
+この記事では Koka を使って問題を解くときに役に立ちそうな情報を書いていきます。</p><h3 id=注意>注意
+<a href=#%e6%b3%a8%e6%84%8f class=h-anchor aria-hidden=true>#</a></h3><p>最初に筆者は Koka にそこまで詳しくなく、<a href=https://koka-lang.github.io/koka/doc/book.html>公式ドキュメント</a>も通読していません。Koka が AtCoder に入ってから少しだけ真面目に書くようになりました。なので、記述に誤りがあるかもしれません。</p><p>次に本記事で使っている Koka コンパイラのバージョンは AtCoder にインストールされている v2.4.0 です。Koka は開発途中のプログラミング言語であり、バージョンを重ねていくと、ここに書かれているプログラムのコンパイルが通らなくなる可能性があります。</p><p>また、Koka コンパイラは JavaScript バックエンドや WASM バックエンドを持ちますが、ここでは AtCoder と同じく C バックエンドを使う (一旦 C 言語に変換してからバイナリファイルを生成する) ことを想定しています<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>。</p><p>最後に本記事では Koka 自体の説明はしません。ご興味のある方は<a href=https://koka-lang.github.io/koka/doc/book.html>公式ドキュメント</a>をご覧ください。</p><h3 id=parseは速くない>parseは速くない
+<a href=#parse%e3%81%af%e9%80%9f%e3%81%8f%e3%81%aa%e3%81%84 class=h-anchor aria-hidden=true>#</a></h3><p><code>std/text/parse</code>が提供しているパーサーコンビネーターはあまり速くありません。
+空白区切りの値を読み込むときは<code>split</code>で分割して、分割された文字列を適切な型に変換した方が速いです。</p><p>例えば、新ジャッジテストコンテスト -Algorithm-で出題された <a href=https://atcoder.jp/contests/newjudge-2308-algorithm/tasks/abc309_d>Add One Edge</a> において、パーサーコンビネーターを用いた実装は TLE しましたが、<code>split</code> を用いた実装 (入力を受け取る部分以外は同じ実装) は TLE せず、十分早い時間で AC しました。</p><ul><li>パーサーコンビネーターを用いた実装: 2183 ms で TLE (<a href=https://atcoder.jp/contests/newjudge-2308-algorithm/submissions/44338567>https://atcoder.jp/contests/newjudge-2308-algorithm/submissions/44338567</a>)</li><li><code>split</code>、<code>parse-int</code>を用いた実装: 189 ms で AC (<a href=https://atcoder.jp/contests/newjudge-2308-algorithm/submissions/44346224>https://atcoder.jp/contests/newjudge-2308-algorithm/submissions/44346224</a>)</li></ul><p>入力を受け取る処理は何度も書くことになるので、次のような関数を用意しておくと良さそうです。</p><pre tabindex=0><code class=language-koka data-lang=koka>fun read-ints(): &lt;console,exn&gt; list&lt;int&gt;
+    readline().split(&#34; &#34;).map(fn(s) { s.parse-int.unjust })
+</code></pre><h3 id=readline関数は最大-1022-文字しか読まない>readline関数は最大 1022 文字しか読まない
+<a href=#readline%e9%96%a2%e6%95%b0%e3%81%af%e6%9c%80%e5%a4%a7-1022-%e6%96%87%e5%ad%97%e3%81%97%e3%81%8b%e8%aa%ad%e3%81%be%e3%81%aa%e3%81%84 class=h-anchor aria-hidden=true>#</a></h3><p><code>std/os/readline</code>の<code>readline</code>関数は必ずしも1行分の文字列を読み取るとは限りません。
+このことは標準ライブラリのドキュメントに記載があります (<a href=https://koka-lang.github.io/koka/doc/std_os_readline.html>引用元</a>, 2023年8月16日に確認)。</p><blockquote><p>Read chararacters until either a newline is encountered (not included in the result), or 1023 characters have been read.</p></blockquote><p>改行文字を読んでいなくても一定文字数を読んでいたらそれまでの文字列を返します。なお、上の文章では 1023 文字までと書かれていますが、正確には 1022 文字です<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>。</p><p>この仕様は1行に長い文字列や大量の整数が書かれているときに問題になります。
+例えば、Language Test 202301 で出題された <a href=https://atcoder.jp/contests/language-test-202301/tasks/abc081_b>Shift only</a> を解くときに困ります。
+そのようなときは<code>std/os/file</code>の<code>read-text-file</code>関数を使って一度入力全体を読み込むとよいです。実装例は<a href=https://atcoder.jp/contests/language-test-202301/submissions/44598654>こちらの提出</a>をご覧ください。</p><h3 id=println-は-flush-をしない>println は flush をしない
+<a href=#println-%e3%81%af-flush-%e3%82%92%e3%81%97%e3%81%aa%e3%81%84 class=h-anchor aria-hidden=true>#</a></h3><p>インタラクティブ形式の問題では出力の度に flush することが要求されますが、<code>println</code>関数は flush を行ないません。
+そのため、手動で flush する必要があります。flush する関数は C 言語を埋め込む<code>c inline ...</code>を使って次のように書けます。</p><pre tabindex=0><code class=language-koka data-lang=koka>// 注意: fun ではなく extern
+extern flush() : console ()
+    c inline &#34;(fflush(stdout))&#34;
+</code></pre><p>Koka だけでは厳しそうで、C 言語を埋め込まないと無理そうなことは時々あるので、<code>extern</code>と<code>c inline</code>は頭の片隅に置いておきたいです。</p><h3 id=refvectora-が指す-vector-の更新には-modify-を使う><code>ref&lt;vector&lt;a>></code> が指す vector の更新には modify を使う
+<a href=#refvectora-%e3%81%8c%e6%8c%87%e3%81%99-vector-%e3%81%ae%e6%9b%b4%e6%96%b0%e3%81%ab%e3%81%af-modify-%e3%82%92%e4%bd%bf%e3%81%86 class=h-anchor aria-hidden=true>#</a></h3><p>参照 (<code>ref&lt;a></code>) の指す vector は<code>modify</code>関数 (<a href=https://koka-lang.github.io/koka/doc/std_core_types.html#modify>リンク</a>) を使って、次のように更新します。</p><pre tabindex=0><code class=language-koka data-lang=koka>// r : ref&lt;vector&lt;a&gt;&gt;
+r.modify fn(v)
+    // v は r が指す vector
+    // v の i 番目の要素を x に変更する
+    v[i] := x
+</code></pre><p>試していませんが、<code>ref&lt;vector&lt;ref&lt;vector>>></code>のような多次元の可変 vector の変更も<code>modify</code>を入れ子にすればできそうです。</p><h3 id=関数とその内部にある関数の両方で-var-を使っていると面倒なことが起きる>関数とその内部にある関数の両方で var を使っていると面倒なことが起きる
+<a href=#%e9%96%a2%e6%95%b0%e3%81%a8%e3%81%9d%e3%81%ae%e5%86%85%e9%83%a8%e3%81%ab%e3%81%82%e3%82%8b%e9%96%a2%e6%95%b0%e3%81%ae%e4%b8%a1%e6%96%b9%e3%81%a7-var-%e3%82%92%e4%bd%bf%e3%81%a3%e3%81%a6%e3%81%84%e3%82%8b%e3%81%a8%e9%9d%a2%e5%80%92%e3%81%aa%e3%81%93%e3%81%a8%e3%81%8c%e8%b5%b7%e3%81%8d%e3%82%8b class=h-anchor aria-hidden=true>#</a></h3><p><strong>注記: ここの内容を正確に書くにはコンパイルの挙動を詳しくなる必要があるのですが、時間を割く余力がないので怪しいメンタルモデルを提示するのに留めています。</strong></p><p>例を出すと、次のコードはコンパイルが通りません。</p><pre tabindex=0><code class=language-koka data-lang=koka>fun say-kuku()
+    // say-kuku のスコープと while の第2引数に指定した関数のスコープで var を使用している
+    var i := 1
+    // 関数であることを強調するために省略記法を用いていない
+    while({ i &lt;= 9 }, fn() {
+        var j := 1
+        while { j &lt;= 9 }
+            if j &gt; 1 then &#34; &#34;.print
+            (i * j).show.pad-left(2, &#39; &#39;).print
+            j := j + 1
+        i := i + 1
+        &#34;&#34;.println
+    })
+</code></pre><p>このコードのコンパイルが通らない原因を自分は以下のような感じで理解しています (<strong>注意: 間違っています</strong>)。</p><ol><li><p>ローカル変数を宣言したスコープごとにハンドラが挿入される (<strong>注意: プログラムの中間表現<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>を見ると分かりますが、実際には挿入されてはいなさそうです</strong>)。上のコードだと次のようなコードに変換される。</p><pre tabindex=0><code class=language-koka data-lang=koka>// 注意: このコードは正確ではありません
+fun say-kuku()
+    // ハンドラを挿入
+    with handle-local-variables-in-say-kuku
+    var i := 1
+    while({ i &lt;= 9 }, fn() {
+        // ハンドラを挿入
+        with handle-local-variable-in-annonymous-function-2
+        var j := 1
+        while { j &lt;= 9 }
+            if j &gt; 1 then &#34; &#34;.print
+            (i * j).show.pad-left(2, &#39; &#39;).print
+            j := j + 1
+        i := i + 1
+        &#34;&#34;.println
+    })
+</code></pre></li><li><p>内側のスコープで<code>i</code>にアクセスしたとき、外側のハンドラを使わなければならないが、内側のハンドラが使われてしまう。これがコンパイルエラーを生じさせる。</p></li></ol><p>このメンタルモデルを<strong>信じる</strong>ことにすると、<code>i</code>へアクセスするときにエフェクトのマスキング (詳しくは公式ドキュメントの<a href=https://koka-lang.github.io/koka/doc/book.html#sec-mask>Masking Effects</a>をご覧ください) をすればコンパイルが通りそうです。実際、次のコードはコンパイルが通り、正常に動作します。</p><pre tabindex=0><code class=language-koka data-lang=koka>fun say-kuku&#39;()
+    var i := 1
+    while({ i &lt;= 9 }, fn() {
+        var j := 1
+        val i&#39; = mask&lt;local&gt;{ i }
+        while { j &lt;= 9 }
+            if j &gt; 1 then &#34; &#34;.print
+            (i&#39; * j).show.pad-left(2, &#39; &#39;).print
+            j := j + 1
+        mask&lt;local&gt;{ i := i + 1 }
+        &#34;&#34;.println
+    })
+</code></pre><p>他の解決策に<code>j</code>も<code>say-kuku'</code>のスコープに持ってくるというのがあります (昔の C 言語みたい)。</p><h3 id=refa-を要素に持つ-vector-を作りたいときは-vectorn-refinit-した後に-for-文で再代入する><code>ref&lt;a></code> を要素に持つ vector を作りたいときは vector(n, ref(init)) した後に for 文で再代入する
+<a href=#refa-%e3%82%92%e8%a6%81%e7%b4%a0%e3%81%ab%e6%8c%81%e3%81%a4-vector-%e3%82%92%e4%bd%9c%e3%82%8a%e3%81%9f%e3%81%84%e3%81%a8%e3%81%8d%e3%81%af-vectorn-refinit-%e3%81%97%e3%81%9f%e5%be%8c%e3%81%ab-for-%e6%96%87%e3%81%a7%e5%86%8d%e4%bb%a3%e5%85%a5%e3%81%99%e3%82%8b class=h-anchor aria-hidden=true>#</a></h3><p>まず、参照を要素に持つ vector は<code>vector-init</code>関数では作れません。なぜかというと、<code>vector-init</code>の第2引数として指定する位置ごとの初期値を計算する関数はエフェクトを発生させてはいけませんが、参照を作成すると<code>alloc&lt;h></code>というエフェクトが生じてしまうからです。</p><p>そのため、<code>vector-init</code>関数ではなく<code>vector</code>関数を使う必要があります。
+しかし、<code>vector(n, ref(init))</code>だけだとすべての参照が同じ reference cell を指してしまいます (Python で<code>[[]] * 10</code>、OCaml で<code>Array.make 10 [| |]</code>と書いたときに起こる問題と同じです)。なので、後で再代入しなければいけません。</p><pre tabindex=0><code class=language-koka data-lang=koka>val v = vector(10, ref(0))
+// この行の時点では v[i] はすべて同じ reference cell を指す
+for (0, v.length - 1) fn(i)
+    v[i] := ref(0)
+// この行の時点で各 v[i] は相異なる reference cell を指す
+</code></pre><h3 id=同じ名前の関数を区別して呼び出す>同じ名前の関数を区別して呼び出す
+<a href=#%e5%90%8c%e3%81%98%e5%90%8d%e5%89%8d%e3%81%ae%e9%96%a2%e6%95%b0%e3%82%92%e5%8c%ba%e5%88%a5%e3%81%97%e3%81%a6%e5%91%bc%e3%81%b3%e5%87%ba%e3%81%99 class=h-anchor aria-hidden=true>#</a></h3><p>Koka は関数のオーバーロードが可能です。そのために関数名から型が一意に定まらず、時折型推論がうまくいかないことがあります。</p><p>そのようなときは<code>(show: (bool) -> string)(x)</code>のように型注釈を加えたり、<code>std/num/int64/and</code>のように関数名の前にその関数が属するモジュールの名前を書いたりするといいです。</p><h3 id=string-は-vectorchar-に変換して使う>string は <code>vector&lt;char></code> に変換して使う
+<a href=#string-%e3%81%af-vectorchar-%e3%81%ab%e5%a4%89%e6%8f%9b%e3%81%97%e3%81%a6%e4%bd%bf%e3%81%86 class=h-anchor aria-hidden=true>#</a></h3><p><code>string</code>型には指定した位置の文字を返す関数がありません。
+文字列の一部を表す型である<code>sslice</code>の関数を使うとそのような関数が書けますが、$ i $文字目のアクセスが$\Theta(i)$になってしまいます。
+そのため、素直に<code>vector&lt;char></code>に変換して扱うのが良さそうです。<code>string</code>から<code>vector&lt;char></code>への変換には<code>vector</code>関数、逆変換には<code>string</code>関数を使います。</p><h3 id=early-return>early return
+<a href=#early-return class=h-anchor aria-hidden=true>#</a></h3><p>Koka では関数から値を返すときに<code>return</code>を使うと early return ができます。
+これを使うと、例えば、二分探索が次のように書けます。</p><pre tabindex=0><code class=language-koka data-lang=koka>fun binsearch(ok: int, ng: int, p: (int) -&gt; e bool): e int
+    if abs(ok - ng) &lt;= 1 then return ok
+    val m = (ok + ng) / 2
+    if p(m) then binsearch(m, ng, p)
+    else binsearch(ok, m, p)
+</code></pre><p>なお、Koka では<code>return</code>を書かなくても最後に評価された式の値が戻り値になりますが、その場合は early return は行なわれません。
+例えば、次のように<code>count-down</code>を定義したうえで<code>count-down(10)</code>を実行すると<code>-1</code>以降も出力されて、停止しません。</p><pre tabindex=0><code class=language-koka data-lang=koka>fun count-down(n: int): console ()
+    if n &lt; 0 then ()
+    n.println
+    // -1 で止まってくれるはずなので unsafe-decreasing を付けて div を取り除く
+    count-down(unsafe-decreasing(n.dec))
+</code></pre><h3 id=fold-int-のドキュメントでの記述と実際の挙動が異なる>fold-int のドキュメントでの記述と実際の挙動が異なる
+<a href=#fold-int-%e3%81%ae%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88%e3%81%a7%e3%81%ae%e8%a8%98%e8%bf%b0%e3%81%a8%e5%ae%9f%e9%9a%9b%e3%81%ae%e6%8c%99%e5%8b%95%e3%81%8c%e7%95%b0%e3%81%aa%e3%82%8b class=h-anchor aria-hidden=true>#</a></h3><p><code>fold-int</code>関数はドキュメントで次のように説明されています (<a href=https://koka-lang.github.io/koka/doc/std_core.html#fold_int>引用元</a>)。</p><blockquote><p>fold over the integers between [start,end] (inclusive).</p></blockquote><p>しかし、以下の式を評価すると<code>1</code>から<code>9</code>までが表示され、<code>10</code>は表示されないことからも分かるように、実際には<code>[start, end)</code> (= <code>[start, end - 1]</code>)内の整数を畳み込んでいます。</p><pre tabindex=0><code class=language-koka data-lang=koka>fold-int(1, 10, 0, fn(i, acc) { i.println; acc + i })
+</code></pre><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>余談ですが、AtCoder では C 言語からのコンパイルには gcc を使用しているようです。&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p><a href=https://github.com/koka-lang/koka/blob/v2.4.0/kklib/src/os.c#L247-L258>実装</a>を読んでみると、<code>fgets(buf, 1023, stdin)</code>を呼び出していることが分かります。<code>fgets</code>は第2引数から1だけ引いた数の文字を読み込むので、1023 - 1 = 1022 文字まで読み込むことになります。&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3><p><code>koka</code>コマンドに<code>--core</code>オプションを付けると<code>.koka</code>ディレクトリ内に core file (拡張子は<code>.kkc</code>) が生成されます。また、<code>--showcore</code>オプションを付けると標準出力にその内容が表示されます。&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=https://samosica.github.io/posts/angstromctf-2023/><span class=button__text>ångstromCTF 2023 Write-Up</span>
+<span class=button__icon>→</span></a></span></div></div></article></div><footer class=footer><div class=footer__inner><a href=/ class=logo style=text-decoration:none><span class=logo__mark><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44"><path fill="none" d="M15 8l14.729 14.382L15 35.367"/></svg></span><span class=logo__text>カクシカシカ</span></a><div class=copyright><span>© 2023 Powered by
+<a href=https://gohugo.io target=_blank rel=noopener>Hugo</a></span>
+<span>Theme created by
+<a href=https://twitter.com/panr target=_blank rel=noopener>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script></div></body></html>
