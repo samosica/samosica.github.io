@@ -76,7 +76,7 @@ for (0, v.length - 1) fn(i)
 </code></pre><h3 id=同じ名前の関数を区別して呼び出す>同じ名前の関数を区別して呼び出す
 <a href=#%e5%90%8c%e3%81%98%e5%90%8d%e5%89%8d%e3%81%ae%e9%96%a2%e6%95%b0%e3%82%92%e5%8c%ba%e5%88%a5%e3%81%97%e3%81%a6%e5%91%bc%e3%81%b3%e5%87%ba%e3%81%99 class=h-anchor aria-hidden=true>#</a></h3><p>Koka は関数のオーバーロードが可能です。そのために関数名から型が一意に定まらず、時折型推論がうまくいかないことがあります。</p><p>そのようなときは<code>(show: (bool) -> string)(x)</code>のように型注釈を加えたり、<code>std/num/int64/and</code>のように関数名の前にその関数が属するモジュールの名前を書いたりするといいです。</p><h3 id=string-は-vectorchar-に変換して使う>string は <code>vector&lt;char></code> に変換して使う
 <a href=#string-%e3%81%af-vectorchar-%e3%81%ab%e5%a4%89%e6%8f%9b%e3%81%97%e3%81%a6%e4%bd%bf%e3%81%86 class=h-anchor aria-hidden=true>#</a></h3><p><code>string</code>型には指定した位置の文字を返す関数がありません。
-文字列の一部を表す型である<code>sslice</code>の関数を使うとそのような関数が書けますが、$ i $文字目のアクセスが$\Theta(i)$になってしまいます。
+文字列の一部を表す型である<code>sslice</code>の関数を使うとそのような関数が書けますが、 $i$文字目のアクセスが$\Theta(i)$になってしまいます。
 そのため、素直に<code>vector&lt;char></code>に変換して扱うのが良さそうです。<code>string</code>から<code>vector&lt;char></code>への変換には<code>vector</code>関数、逆変換には<code>string</code>関数を使います。</p><h3 id=early-return>early return
 <a href=#early-return class=h-anchor aria-hidden=true>#</a></h3><p>Koka では関数から値を返すときに<code>return</code>を使うと early return ができます。
 これを使うと、例えば、二分探索が次のように書けます。</p><pre tabindex=0><code class=language-koka data-lang=koka>fun binsearch(ok: int, ng: int, p: (int) -&gt; e bool): e int
@@ -99,4 +99,7 @@ for (0, v.length - 1) fn(i)
 <span class=button__icon>→</span></a></span></div></div></article></div><footer class=footer><div class=footer__inner><a href=/ class=logo style=text-decoration:none><span class=logo__mark><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44"><path fill="none" d="M15 8l14.729 14.382L15 35.367"/></svg></span><span class=logo__text>カクシカシカ</span></a><div class=copyright><span>© 2023 Powered by
 <a href=https://gohugo.io target=_blank rel=noopener>Hugo</a></span>
 <span>Theme created by
-<a href=https://twitter.com/panr target=_blank rel=noopener>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script></div></body></html>
+<a href=https://twitter.com/panr target=_blank rel=noopener>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css integrity=sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0 crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js integrity=sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4 crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script></div></body></html>
