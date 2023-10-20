@@ -2,7 +2,7 @@
 title: "AtCoderでKokaを使うときのTips"
 date: 2023-08-12T20:19:00+09:00
 draft: false
-math: false
+math: true
 ---
 
 2023年8月に行なわれた言語アップデートにより AtCoder で [Koka](https://koka-lang.github.io/koka/doc/book.html) が使えるようになりました。
@@ -173,7 +173,7 @@ Koka は関数のオーバーロードが可能です。そのために関数名
 ### string は `vector<char>` に変換して使う
 
 `string`型には指定した位置の文字を返す関数がありません。
-文字列の一部を表す型である`sslice`の関数を使うとそのような関数が書けますが、$ i $文字目のアクセスが$\Theta(i)$になってしまいます。
+文字列の一部を表す型である`sslice`の関数を使うとそのような関数が書けますが、 $i$文字目のアクセスが$\Theta(i)$になってしまいます。
 そのため、素直に`vector<char>`に変換して扱うのが良さそうです。`string`から`vector<char>`への変換には`vector`関数、逆変換には`string`関数を使います。
 
 ### early return
