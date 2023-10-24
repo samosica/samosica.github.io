@@ -22,6 +22,13 @@ math: true
 
 最後に本記事では Koka 自体の説明はしません。ご興味のある方は[公式ドキュメント](https://koka-lang.github.io/koka/doc/book.html)をご覧ください。
 
+### シンタックスハイライトを使いたい
+
+Visual Studio Code を使っている場合は [Koka Syntax Highlighting
+](https://marketplace.visualstudio.com/items?itemName=koka.language-koka) という拡張機能が公式から提供されていて、インストールすることでシンタックスハイライトが有効になります。注意として、似た拡張機能に [koka](https://marketplace.visualstudio.com/items?itemName=maelvalais.koka) がありますが、最後に更新されたのが6年前 (2023年10月24日時点) と古いです。
+
+また、Emacs や Vim など他のエディタもサポートされているようで、[support ディレクトリ](https://github.com/koka-lang/koka/tree/master/support)に必要なファイルが置かれているようです。
+
 ### parseは速くない
 
 `std/text/parse`が提供しているパーサーコンビネーターはあまり速くありません。
