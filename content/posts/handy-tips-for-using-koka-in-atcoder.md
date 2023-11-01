@@ -1,6 +1,7 @@
 ---
 title: "AtCoderでKokaを使うときのTips"
 date: 2023-08-12T20:19:00+09:00
+lastmod: 2023-11-02T0:00:00+09:00
 draft: false
 math: true
 ---
@@ -227,3 +228,12 @@ fold-int(1, 10, 0, fn(i, acc) { i.println; acc + i })
 ```koka
 fold-int(1, 10, (0, 1), fn((s, p), i) { (s + i, p * i) })
 ```
+
+### プログラムの一部の型を調べる
+
+**注記: より簡便な方法がありそうです。**
+
+1. (必要ならば) 型を調べたいプログラムを関数として切り出し、適当な名前を付ける。
+2. `koka (ファイルパス) --html --htmlcss koka.css --outputdir docs`を実行する。実行すると`docs/`にドキュメントとなる HTML ファイルが生成される ([標準ライブラリのドキュメント](https://koka-lang.github.io/koka/doc/toc.html)と同じ形式)。
+3. [Koka のリポジトリ](https://github.com/koka-lang/koka)から`koka.css`(2023年11月2日時点の master ブランチだと`doc/koka.css`)をダウンロードして、`docs/`に配置する。
+4. `docs/(ファイル名).xmp.html`をブラウザで開き、見たい関数の名前をクリックして、そのプログラムを表示する。その後、型を知りたい部分にカーソルを合わせると型が表示される。
