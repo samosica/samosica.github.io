@@ -1,7 +1,7 @@
 ---
 title: "AtCoderでKokaを使うときのTips"
 date: 2023-08-12T20:19:00+09:00
-lastmod: 2023-11-02T0:00:00+09:00
+lastmod: 2024-05-10T22:00:00+09:00
 draft: false
 math: true
 ---
@@ -182,7 +182,21 @@ Koka は関数のオーバーロードが可能です。そのために関数名
 
 `string`型には指定した位置の文字を返す関数がありません。
 文字列の一部を表す型である`sslice`の関数を使うとそのような関数が書けますが、 $i$文字目のアクセスが$\Theta(i)$になってしまいます。
-そのため、素直に`vector<char>`に変換して扱うのが良さそうです。`string`から`vector<char>`への変換には`vector`関数、逆変換には`string`関数を使います。
+そのため、素直に`vector<char>`に変換して扱うのが良さそうです。`string`から`vector<char>`への変換には`vector`関数を使います。
+
+注意としてその逆、`vector<char>`から`string`への変換には`string`関数が用意されていますが、末尾に余計な文字を付けてしまうバグがあります。
+
+```text
+> "ABC".vector.string
+"ABC\U0EE0FF"
+
+# このバグは文字列から変換したベクトル以外でも発生する
+> ['A', 'B', 'C'].vector.string
+"ABC\U0EE0FF"
+```
+
+このバグはすでに報告されており ([Vector to string conversion adds an extra character · Issue #486 · koka-lang/koka](https://github.com/koka-lang/koka/issues/486))、リリースはされていないものの修正されています。
+AtCoder で使うのは言語アップデートが行なわれてからが良さそうです。
 
 ### early return
 
@@ -219,6 +233,8 @@ fun count-down(n: int): console ()
 ```koka
 fold-int(1, 10, 0, fn(i, acc) { i.println; acc + i })
 ```
+
+追記 (2024/5/10): ドキュメント通りにする PR を出してマージされました ([Fix off-by-one bug in `range/fold*` · Pull Request #466 · koka-lang/koka](https://github.com/koka-lang/koka/pull/466))。v3.1.0 から変更が適用されます。
 
 ### 関数のパラメータにはパターンを指定できる
 
