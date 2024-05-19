@@ -85,6 +85,7 @@ OCaml の`int`は最大でも**63ビット**符号付き整数の型なので、
 
 また、もし、要素間の大小関係に基づく操作が必要ないときは標準ライブラリの`Hashtbl`モジュールも使えます。`Hashtbl.length`が`cardinal`の代わりになります。
 
+<!-- markdownlint-disable-next-line MD013 -->
 補足: `cardinal`関数を Θ(1) にしたいという要望はすでに GitHub の issue にあります。気になる方は[Make Map length run in O(1) instead of O(n) · Issue #12866 · ocaml/ocaml](https://github.com/ocaml/ocaml/issues/12866)をご参照ください。
 
 ## iter を多用しすぎると遅くなることがある
@@ -98,8 +99,13 @@ OCaml の`int`は最大でも**63ビット**符号付き整数の型なので、
 
 おそらく以下の提出のことだと思います (時系列が逆になっていますが、これは最初に書いた iter を使ったプログラムがうまく動かず、後で書き直したからです)。
 
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable MD013 -->
+
 - iter を使って書いた提出: <https://atcoder.jp/contests/abc320/submissions/45785399> (1900 ms)
 - for 文で書き直した提出: <https://atcoder.jp/contests/abc320/submissions/45785346> (1360 ms)
+
+<!-- markdownlint-restore -->
 
 簡単にしか調べていない、かつ、調べたのがかなり前なので不確かなのですが、
 AtCoder の環境では flambda が有効になっていないために、iter を使ったプログラムの最適化が弱いようです。
@@ -157,8 +163,13 @@ let () =
 
 この方法を使ったプログラムの例をいくつか載せておきます。
 
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable MD013 -->
+
 - <https://atcoder.jp/contests/abc350/submissions/52583256> (AtCoder Beginner Contest 350 C)。入れ替える要素の組をイテレーターで持っています。
 - <https://atcoder.jp/contests/abc337/submissions/52467430> (AtCoder Beginner Contest 337 D)。ある行 (あるいは列)のある区間をすべて`o`にするために必要な回数をイテレーターで持っています。
+
+<!-- markdownlint-restore -->
 
 ## 毎回決まった量加算するループを iter を使って書く
 
