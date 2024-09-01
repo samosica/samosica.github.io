@@ -221,7 +221,7 @@ Haskell を使っている方にはお馴染みかもしれません。
 
 ```ocaml
 let lift ~f o1 o2 =
-  match o1 o2 with
+  match o1, o2 with
   | None, _ -> o2
   | _, None -> o1
   | Some x1, Some x2 -> Some (f x1 x2)
