@@ -1,6 +1,7 @@
 ---
 title: "AtCoderでOCamlを使うときのTips"
 date: 2024-05-19T18:00:00+09:00
+lastmod: 2024-09-02T02:00:00+09:00
 draft: false
 math: false
 ---
