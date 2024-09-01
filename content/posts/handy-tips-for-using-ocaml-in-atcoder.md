@@ -232,6 +232,35 @@ let lift ~f o1 o2 =
 この方法は最大値でも使えます。両方で同じ方法を使えば書き方を迷う時間を減らせます。
 さらには、一般の二項演算でも使えて汎用性が高いです。
 
+## 特定の型に特化したハッシュテーブルを使う
+
+多相的なハッシュテーブル (`Hashtbl.t`)だと遅くて困るときは使用する型に特化したハッシュテーブルを使うと速くなるかもしれません。
+
+例えば、キーが`int`のハッシュテーブルは
+
+```ocaml
+Base.Hashtbl.create ~size:n (module Base.Int)
+```
+
+で作成できます。
+
+また、`Hashtbl.Make`を使っても作成できます。
+
+```ocaml
+(* バージョン 5.1 以降では Int.hash があるので単に Int と書けます。 *)
+module Int_tbl = Hashtbl.Make (Base.Int)
+
+Int_tbl.create n
+```
+
+[AtCoder Beginner Contest 363 C - Avoid K Palindrome 2](https://atcoder.jp/contests/abc363/tasks/abc363_c)の解法で簡単に試したところ、
+
+- `Base.Hashtbl`を使ったプログラムが一番速かった。
+- `Hashtbl.Make`を使ったプログラムはその約1.65倍。
+- 普通の`Hashtbl`を使ったプログラムは約2.28倍。
+
+(もちろん精査は必要ですが、)速度に困ったらとりあえず初めに`Base.Hashtbl`を使えば良さそうです。
+
 ## 参考資料
 
 - [OCaml library : Scanf](https://ocaml.org/manual/5.0/api/Scanf.html)
