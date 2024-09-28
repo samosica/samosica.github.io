@@ -1,7 +1,7 @@
 ---
 title: "AtCoderでKokaを使うときのTips"
 date: 2023-08-12T20:19:00+09:00
-lastmod: 2024-05-10T22:00:00+09:00
+lastmod: 2024-09-28T23:00:00+09:00
 draft: false
 math: true
 ---
@@ -159,7 +159,7 @@ fun say-kuku'()
 
 ### `ref<a>` を要素に持つ vector を作りたいときは vector(n, ref(init)) した後に for 文で再代入する
 
-まず、参照を要素に持つ vector は`vector-init`関数では作れません。なぜかというと、`vector-init`の第2引数として指定する位置ごとの初期値を計算する関数はエフェクトを発生させてはいけませんが、参照を作成すると`alloc<h>`というエフェクトが生じてしまうからです。
+参照を要素に持つ vector は`vector-init`関数では作れません。なぜかというと、`vector-init`の第2引数として指定する位置ごとの初期値を計算する関数はエフェクトを発生させてはいけませんが、参照を作成すると`alloc<h>`というエフェクトが生じてしまうからです。
 
 そのため、`vector-init`関数ではなく`vector`関数を使う必要があります。
 しかし、`vector(n, ref(init))`だけだとすべての参照が同じ reference cell を指してしまいます (Python で`[[]] * 10`、OCaml で`Array.make 10 [| |]`と書いたときに起こる問題と同じです)。なので、後で再代入しなければいけません。
@@ -171,6 +171,9 @@ for (0, v.length - 1) fn(i)
     v[i] := ref(0)
 // この行の時点で各 v[i] は相異なる reference cell を指す
 ```
+
+追記 (2024/9/28): v3.0.0 から`vector-init`の第2引数でエフェクトを起こせるようになりました ([fix vector-init and add vector-init-total, fixes issue #416 and #420 · koka-lang/koka@8c29f7d](https://github.com/koka-lang/koka/commit/8c29f7d11068758ac2cab44dadbecdda171048e8))。
+従来のエフェクトなし版は`vector-init-total`という名前に変わっています。
 
 ### 同じ名前の関数を区別して呼び出す
 
