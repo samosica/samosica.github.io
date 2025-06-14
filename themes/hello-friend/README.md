@@ -297,6 +297,6 @@ I'd be happy to know more about you and what you are doing. If you want to share
 
 ## License
 
-Copyright © 2019-2022 Radosław Kozieł ([@panr](https://twitter.com/panr))
+Copyright © 2019-2022 Radosław Kozieł ([@panr](https://x.com/panr))
 
 The theme is released under the MIT License. Check the [original theme license](https://github.com/panr/hugo-theme-hello-friend/blob/master/LICENSE.md) for additional licensing information.
