@@ -29,6 +29,10 @@ theme = "hello-friend"
   #(default is Description or Summary metadata in the front matter)
   # rssFullText = true
 
+[markup]
+  [markup.highlight]
+    style="github-dark"
+
 [languages]
   [languages.en.params]
     title = "カクシカシカ"
