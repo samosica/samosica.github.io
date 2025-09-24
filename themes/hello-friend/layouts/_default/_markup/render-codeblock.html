@@ -1,0 +1,9 @@
+{{/* <https://gohugo.io/render-hooks/code-blocks/> */}}
+{{ $result := transform.HighlightCodeBlock . }}
+<div class="highlight-wrapper">
+    {{/* マークダウンで指定した canCopy を呼び出すときは cancopy を指定する必要がある */}}
+    {{ if or (not .Attributes.cancopy) (eq .Attributes.cancopy "true") }}
+        <button class="copy-button">Copy</button>
+    {{ end }}
+    {{ $result.Wrapped }}
+</div>

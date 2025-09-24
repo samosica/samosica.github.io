@@ -1,0 +1,26 @@
+.highlight-wrapper{
+    position: relative;
+
+    .copy-button{
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        background-color: #0d1117;
+        color: #e6edf3;
+        border: 1px solid #75787b;
+        border-radius: 6px;
+        padding: 6px 12px;
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: #202a39;
+        }
+
+        &:active {
+            background-color: #2e3d52;
+            border-color: #8f9397;
+        }
+    }
+}
