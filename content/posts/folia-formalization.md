@@ -10,6 +10,8 @@ math: true
 
 <!--more-->
 
+<!-- markdownlint-disable MD013 -->
+
 すべてのソースコードは[ここ](https://github.com/samosica/folia-formalization/blob/main/Folia.v)にあります。
 
 ### 問題
@@ -180,10 +182,12 @@ Proposition in_total_boundP (n m : nat) (s : seq nat) :
 ```
 
 この命題の主張は
+
 * `lower_bound_bottomup s <= n <= upper_bound_bottomup s`（Step 2で示した命題からこれはすべての条件を満たす森が存在することと同値）であるとき、すべての条件を満たす、かつ、頂点数が[$ m]である森が存在するための必要十分条件は`lower_bound_total s n <= m <= upper_bound_total s n`が成り立つことである
 です。
 
 証明の鍵となるのは次の事実です。
+
 * 区間`[lower_bound_total s n, upper_bound_total s n] (lower_bound_bottomup s <= n <= upper_bound_bottomup s)`は区間`[lower_bound_total s (lower_bound_bottomup s), upper_bound_total s (upper_bound_bottomup s)]`を覆う
 
 ### Step 5: 最小値、最大値の計算を高速化する
@@ -247,7 +251,7 @@ Definition lower_bounds_backforth' s n :=
 
 Definition upper_bounds_backforth' s n :=
   map2 minn (upper_bounds_bottomup s) (upper_bounds_topdown s n).
- 
+
 Definition lower_bound_total' s n :=
   sumn (lower_bounds_backforth' s n).
 
