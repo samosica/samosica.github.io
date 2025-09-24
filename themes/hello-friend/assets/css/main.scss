@@ -33,6 +33,11 @@ body {
   -webkit-overflow-scrolling: touch;
   -webkit-text-size-adjust: 100%;
 
+  // <https://ics.media/entry/240411/>
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-break: strict;
+
   @media ($phone) {
     font-size: 1rem;
   }
