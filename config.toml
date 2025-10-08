@@ -33,6 +33,11 @@ theme = "hello-friend"
   [markup.highlight]
     style="github-dark"
     noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.extensions.cjk]
+      enable = true
+      eastAsianLineBreaks = true
+      eastAsianLineBreaksStyle = "css3draft"
 
 [languages]
   [languages.en.params]
