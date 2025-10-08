@@ -32,6 +32,7 @@ theme = "hello-friend"
 [markup]
   [markup.highlight]
     style="github-dark"
+    noClasses = false
 
 [languages]
   [languages.en.params]
