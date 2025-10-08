@@ -1,7 +1,7 @@
 ---
 title: "AtCoderでLeanを試す (1)"
-date: 2025-06-14T00:00:00+09:00
-lastmod: 2025-06-14T00:00:00+09:00
+date: 2025-10-11T10:00:00+09:00
+lastmod: 2025-10-11T10:00:00+09:00
 draft: false
 math: false
 toc: true
