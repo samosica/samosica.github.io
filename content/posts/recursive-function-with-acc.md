@@ -12,6 +12,12 @@ Accを使って定義した再帰関数の評価が進まず、自明な定理�
 
 <!--more-->
 
+## 注意
+
+以下のコードは Rocq 9.0.0 で試しました。また、以下の情報は Rocq 9.0.* 時点のものです。
+
+## 本題
+
 以下の関数`floor_log2`を考えます[^1]。
 
 [^1]: 定義の方法は[Xavier Leroy, "Well-founded recursion done right"]を参考にしています。
@@ -69,15 +75,15 @@ Qed.
 >In order to keep the strong normalization property, the fixed point reduction will only be performed when the argument in position of the decreasing argument (which type should be in an inductive definition) starts with a constructor.
 <!-- markdownlint-restore -->
 
-([Inductive types and recursive functions — The Rocq Prover 9.1.0 documentation]から引用。
+([Inductive types and recursive functions — The Rocq Prover 9.0.1 documentation]から引用。
 閲覧日: 2025年10月27日)
 
-[Inductive types and recursive functions — The Rocq Prover 9.1.0 documentation]: <https://rocq-prover.org/doc/v9.1/refman/language/core/inductive.html#:~:text=In%20order%20to%20keep%20the%20strong%20normalization%20property%2C%20the%20fixed%20point%20reduction%20will%20only%20be%20performed%20when%20the%20argument%20in%20position%20of%20the%20decreasing%20argument%20(which%20type%20should%20be%20in%20an%20inductive%20definition)%20starts%20with%20a%20constructor.>
+[Inductive types and recursive functions — The Rocq Prover 9.0.1 documentation]: <https://rocq-prover.org/doc/v9.0/refman/language/core/inductive.html#:~:text=In%20order%20to%20keep%20the%20strong%20normalization%20property%2C%20the%20fixed%20point%20reduction%20will%20only%20be%20performed%20when%20the%20argument%20in%20position%20of%20the%20decreasing%20argument%20(which%20type%20should%20be%20in%20an%20inductive%20definition)%20starts%20with%20a%20constructor.>
 
 この記述によると、再帰関数の適用は decreasing argument (関数の停止性を保証する呼び出しのたびに小さくなる引数)が
 コンストラクタでないと評価が進まないそうです。
 
-同様の記述が<https://rocq-prover.org/doc/v9.1/refman/language/core/inductive.html#reduction-rule>でも確認できます。
+同様の記述が<https://rocq-prover.org/doc/v9.0/refman/language/core/inductive.html#reduction-rule>でも確認できます。
 
 `floor_log2`の decreasing argument は`ACC`です。なので、`ACC`を分解してコンストラクタの形で表さないと
 評価が進まないということのようです。
